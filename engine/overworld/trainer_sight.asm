@@ -76,6 +76,7 @@ _SetSpritePosition2::
 
 TrainerWalkUpToPlayer::
 	ld a, [wSpriteIndex]
+	ldh [hSpriteIndex], a
 	swap a
 	ld [wTrainerSpriteOffset], a
 	call ReadTrainerScreenPosition
@@ -92,8 +93,17 @@ TrainerWalkUpToPlayer::
 	ld b, a
 	ld a, $3c           ; (fixed) player screen Y pos
 	call CalcDifference
-	cp $21              ; trainer is right above player
-	ret c
+	cp $20              ; trainer is 2 spaces above player
+	ret z
+	cp $10              ; trainer is 1 space away from player
+	jr nz, .walkTowardsDown
+	call GetSpriteMovementByte2Pointer
+    ld [hl], UP
+	ld hl, wNPCMovementDirections2
+	ld [hl], UP
+    inc hl
+	jp .executeWalkScript
+.walkTowardsDown
 	swap a
 	dec a
 	dec a
@@ -106,8 +116,17 @@ TrainerWalkUpToPlayer::
 	ld b, a
 	ld a, $3c           ; (fixed) player screen Y pos
 	call CalcDifference
-	cp $21              ; trainer is right below player
-	ret c
+	cp $20              ; trainer is 2 spaces below player
+	ret z
+	cp $10              ; trainer is 1 space away from player
+	jr nz, .walkTowardsUp
+	call GetSpriteMovementByte2Pointer
+    ld [hl], DOWN
+	ld hl, wNPCMovementDirections2
+	ld [hl], DOWN
+    inc hl
+	jr .executeWalkScript
+.walkTowardsUp
 	swap a
 	dec a
 	dec a
@@ -120,8 +139,17 @@ TrainerWalkUpToPlayer::
 	ld b, a
 	ld a, $40           ; (fixed) player screen X pos
 	call CalcDifference
-	cp $21              ; trainer is directly left of player
-	ret c
+	cp $20              ; trainer is 2 spaces to the left of player
+	ret z
+	cp $10              ; trainer is 1 space away from player
+	jr nz, .walkTowardsRight
+	call GetSpriteMovementByte2Pointer
+    ld [hl], LEFT
+	ld hl, wNPCMovementDirections2
+	ld [hl], LEFT
+    inc hl
+	jr .executeWalkScript
+.walkTowardsRight
 	swap a
 	dec a
 	dec a
@@ -134,8 +162,17 @@ TrainerWalkUpToPlayer::
 	ld b, a
 	ld a, $40           ; (fixed) player screen X pos
 	call CalcDifference
-	cp $21              ; trainer is directly right of player
-	ret c
+	cp $20              ; trainer is 2 spaces to the right of player
+	ret z
+	cp $10              ; trainer is 1 space away from player
+	jr nz, .walkTowardsLeft
+	call GetSpriteMovementByte2Pointer
+    ld [hl], RIGHT
+	ld hl, wNPCMovementDirections2
+	ld [hl], RIGHT
+    inc hl
+	jr .executeWalkScript
+.walkTowardsLeft
 	swap a
 	dec a
 	dec a
@@ -146,9 +183,9 @@ TrainerWalkUpToPlayer::
 	ld hl, wNPCMovementDirections2
 	ld de, wNPCMovementDirections2
 	call FillMemory     ; write the necessary steps to reach player
+.executeWalkScript
 	ld [hl], $ff        ; write end of list sentinel
-	ld a, [wSpriteIndex]
-	ldh [hSpriteIndex], a
+	ld de, wNPCMovementDirections2
 	jp MoveSprite_
 
 ; input: de = offset within sprite entry

@@ -1130,7 +1130,7 @@ IsSpriteOrSignInFrontOfPlayer::
 ; part of the above function, but sometimes its called on its own, when signs are irrelevant
 ; the caller must zero [hSpriteIndexOrTextID]
 IsSpriteInFrontOfPlayer::
-	ld d, $10 ; talking range in pixels (normal range)
+	ld d, $20 ; talking range in pixels (normal range)
 IsSpriteInFrontOfPlayer2::
 	lb bc, $3c, $40 ; Y and X position of player sprite
 	ld a, [wSpritePlayerStateData1FacingDirection]
