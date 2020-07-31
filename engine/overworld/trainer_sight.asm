@@ -92,9 +92,10 @@ TrainerWalkUpToPlayer::
 	ld b, a
 	ld a, $3c           ; (fixed) player screen Y pos
 	call CalcDifference
-	cp $10              ; trainer is right above player
-	ret z
+	cp $21              ; trainer is right above player
+	ret c
 	swap a
+	dec a
 	dec a
 	ld c, a             ; bc = steps yet to go to reach player
 	xor a
@@ -105,9 +106,10 @@ TrainerWalkUpToPlayer::
 	ld b, a
 	ld a, $3c           ; (fixed) player screen Y pos
 	call CalcDifference
-	cp $10              ; trainer is right below player
-	ret z
+	cp $21              ; trainer is right below player
+	ret c
 	swap a
+	dec a
 	dec a
 	ld c, a             ; bc = steps yet to go to reach player
 	ld b, $0
@@ -118,9 +120,10 @@ TrainerWalkUpToPlayer::
 	ld b, a
 	ld a, $40           ; (fixed) player screen X pos
 	call CalcDifference
-	cp $10              ; trainer is directly left of player
-	ret z
+	cp $21              ; trainer is directly left of player
+	ret c
 	swap a
+	dec a
 	dec a
 	ld c, a             ; bc = steps yet to go to reach player
 	ld b, $0
@@ -131,9 +134,10 @@ TrainerWalkUpToPlayer::
 	ld b, a
 	ld a, $40           ; (fixed) player screen X pos
 	call CalcDifference
-	cp $10              ; trainer is directly right of player
-	ret z
+	cp $21              ; trainer is directly right of player
+	ret c
 	swap a
+	dec a
 	dec a
 	ld c, a             ; bc = steps yet to go to reach player
 	ld b, $0
