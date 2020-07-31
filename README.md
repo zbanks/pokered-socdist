@@ -1,3 +1,25 @@
+# Pokémon Red and Blue: Social Distancing Edition
+
+A Romhack of Pokémon Red/Blue where trainers respect social distancing guidelines. 
+
+Trainers will leave an empty space between themselves & the player before starting a battle. You can also talk to NPCs from an additional tile away.
+
+## Caveat
+
+This is mostly meant as a joke: this might make the game unbeatable? (Let me know, and we can probably move trainers or obstacles around to fix it)
+
+## Clips
+
+![A trainer walking towards the player](readme_assets/poke-walk.gif)
+
+![A trainer walking away from the player](readme_assets/poke-away.gif)
+
+![The player talking to an NPC](readme_assets/poke-talk.gif)
+
+The original README is below! This wouldn't be possible without the original disassembly project: [pokered](https://github.com/pret/pokered)!
+
+----
+
 # Pokémon Red and Blue [![Build Status][travis-badge]][travis]
 
 This is a disassembly of Pokémon Red and Blue.
